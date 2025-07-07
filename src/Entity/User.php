@@ -20,6 +20,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $uuid = null;
 
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private string $email;
+
     /**
      * @var list<string> The user roles
      */
@@ -48,6 +51,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
 
     /**
      * A visual identifier that represents this user.

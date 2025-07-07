@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/api', name: 'api_')]
 class AuthController extends AbstractController
@@ -35,6 +36,8 @@ class AuthController extends AbstractController
         $user->setEmail($data['email']);
         $user->setPassword($passwordHasher->hashPassword($user, $data['password']));
         $user->setRoles(['ROLE_USER']);
+        $user->setUuid(Uuid::v4()->toRfc4122()); // 👈 Set UUID here
+
 
         $em->persist($user);
         $em->flush();
